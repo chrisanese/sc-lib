@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Install Scuttle</title>
+<link rel="stylesheet" type="text/css" href="css/_install.css" />
+</head>
+<body>
+	<h1>Install Scuttle.</h1>
+
+	<form action="install?{{timestamp}}" method="post"
+		onsubmit="document.getElementById('controls').innerHTML = '<p>Installiere Scuttle</p>';">
+
+		<p>
+			<label for="scuttle-jdbc-driver">JDBC Driver:</label> <input
+				name="scuttle-jdbc-driver" id="scuttle-jdbc-driver" type="text"
+				value="{{jdbcDriver}}" /> <br /> <label for="scuttle-jdbc-user">JDBC
+				User:</label> <input name="scuttle-jdbc-user" id="scuttle-jdbc-user"
+				type="text" value="{{jdbcUser}}" /> <br /> <label
+				for="scuttle-jdbc-password">JDBC Password:</label> <input
+				name="scuttle-jdbc-password" id="scuttle-jdbc-password"
+				type="password" value="" />
+		</p>
+		<p>
+			<label for="scuttle-jdbc-url">JDBC URL:</label>
+			<script type="text/javascript">
+        function scuttleUpd() {
+          var host, database;
+
+          host = document.getElementById('upd-1').value;
+          database = document.getElementById('upd-2').value;
+
+          document.getElementById('scuttle-jdbc-url').value = ""
+              + "jdbc:mysql://" + host + "/" + database
+              + "?zeroDateTimeBehavior=convertToNull"
+              + "&useUnicode=true&characterEncoding=UTF-8";
+        }
+
+        var scuttleInstall = ''
+            + '<small><input type="text" id="upd-1" value="{{hostname}}" onkeyup="scuttleUpd()" />'
+            + ' <input type="text" id="upd-2" value="{{database}}" onkeyup="scuttleUpd()" /></small>';
+
+        document.write(scuttleInstall);
+      </script>
+
+			<textarea name="scuttle-jdbc-url" id="scuttle-jdbc-url">{{jdbcUrl}}</textarea>
+		</p>
+		<p>
+			<label for="scuttle-admin-user">Admin User:</label> <input
+				type="text" id="scuttle-admin-user" name="scuttle-admin-user"
+				value="{{adminUser}}" /> <br /> <label
+				for="scuttle-admin-password">Admin Password:</label> <input
+				type="password" id="scuttle-admin-password"
+				name="scuttle-admin-password" />
+		</p>
+
+		<p>
+			<label class="checkbox"><input type="checkbox"
+				name="scuttle-auto-install" value="yes" /> Konfigurationsdatei automatisch
+				anlegen.</label>
+		</p>
+
+		<p style="text-align: center;" id="controls">
+			<input type="submit" value="Install now." style="width: 200px" />
+		</p>
+
+		<div class="pane">
+			<p>
+				<strong>Optional: MySQL Admin</strong> <br /> Diese Option wird
+				automatisch den Nutzer und die Datenbank anlegen. Wenn dies schon
+				manuell geschehen ist, ist dies egal. Der Zugang wird kein weiteres
+				Mal ben&ouml;tigt und nicht gespeichert. Der MySQL-Nutzer muss die
+				<code>GRANT OPTION</code>
+				besitzen.
+			</p>
+			<p>
+				<label for="scuttle-mysql-user">MySQL-User:</label> <input
+					type="text" id="scuttle-mysql-user" name="scuttle-mysql-user" /> <br />
+				<label for="scuttle-mysql-password">MySQL-Password:</label> <input
+					type="password" id="scuttle-mysql-password"
+					name="scuttle-mysql-password" />
+			</p>
+		</div>
+
+	</form>
+
+
+</body>
+</html>

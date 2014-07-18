@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/_install.css" />
+</head>
+<body>
+
+	<h1>Scuttle Installation</h1>
+
+	{{#fail-persistence}}
+	<div class="error">
+		<p>
+			No persistence unit found (this is an error in
+			<code>web.xml</code>
+			or
+			<code>persistence.xml</code>
+			and most likely not your fault).
+		</p>
+	</div>
+	{{/fail-persistence}} {{#fail-driver}}
+	<div class="error">
+		<p>The JDBC driver could not be loaded:</p>
+		<p>
+			<code>{{fail-driver}}</code>
+		</p>
+	</div>
+	{{/fail-driver}} {{#fail-emf}}
+	<div class="error">
+		<p>The persistence unit could not be created.</p>
+		<p>
+			<code>{{fail-emf}}</code>
+		</p>
+	</div>
+	{{/fail-emf}} {{#fail-db}}
+	<div class="error">
+		<p>Could not connect with the database:</p>
+		<p>
+			<code>{{fail-db}}</code>
+		</p>
+	</div>
+	{{/fail-db}} {{#fail-some}}
+	<div class="error">
+		<p>Something went wrong:</p>
+		<p>
+			<code>{{fail-some}}</code>
+		</p>
+	</div>
+	{{/fail-some}} {{#fail-not-empty}}
+	<div class="error">
+		<p>Some tables already exist and would be overwritten by the
+			schema creation.</p>
+	</div>
+	{{/fail-not-empty}} {{#fail-creation}}
+	<div class="error">
+		<p>Schema creation failed:</p>
+		<p>
+			<code>{{fail-creation}}</code>
+		</p>
+	</div>
+	{{/fail-creation}} {{#fail-custom-installation}}
+	<div class="error">
+		<p>Setting up data in the database for the first time failed:</p>
+		<p>
+			<code>{{fail-custom-installation}}</code>
+		</p>
+	</div>
+	{{/fail-custom-installation}} {{#success}}
+	<div class="success">
+		<h2>Installed!</h2>
+		{{#auto-installed}}
+		<p>
+			Scuttle hat automatisch eine Konfigurationsdatei mit den obigen
+			Einstellungen unter <b><code>{{config-file}}</code></b> erstellt.
+		</p>
+		{{/auto-installed}} {{^auto-installed}}
+		<p>Scuttle kann mit der Datenbank verbinden und hat die Tabellen
+			angelegt. Jetzt muss nur noch die Konfiguration gesichert werden:</p>
+		<pre>{{config}}</pre>
+		{{#auto-install-fail}}
+		<p>Scuttle hat versucht die Konfigurationsdatei automatisch zu
+			erstellen, aber an dem Pfad darf nicht geschrieben werden.</p>
+		{{/auto-install-fail}}
+		<p>
+			Diese sollte am besten in <b><code>{{config-file}}</code></b>
+			abgelegt werden. Danach muss der Application Container einmal
+			neugestartet werden.
+		</p>
+		{{/auto-installed}}
+		<p>
+			Der Pfad an dem die Konfigurationsdatei gesucht wird kann mit der
+			Umgebungsvariable <b><code>SCUTTLE_CONFIG</code></b>, mit der System
+			Property <b><code>scuttle.config</code></b>, oder mit dem <em>init
+				parameter</em> <b><code>scuttleConfig</code></b> im Context der
+			Webanwendung ver&auml;ndert werden.
+	</div>
+	{{/success}}
+
+</body>
+</html>
